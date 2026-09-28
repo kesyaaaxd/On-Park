@@ -12,6 +12,8 @@ import ParkingLocationManager from './components/ParkingLocationManager'
 import ParkingSlotManager from './components/ParkingSlotManager'
 import ReservationManager from './components/ReservationManager'
 import Payment from './components/Payment'
+import ReservationConfirmation from './components/ReservationConfirmation'
+
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -83,6 +85,28 @@ function App() {
           slotData={slotData}
           reservationData={reservationData}
           onAddReservation={handleAddReservation}
+        />
+      )
+    }
+  
+    if (currentPage === 'payment') {
+      return (
+        <Payment
+          currentUser={currentUser}
+          parkingData={parkingData}
+          reservationData={reservationData}
+          onPayment={handlePayment}
+        />
+      )
+    }
+  
+    if (currentPage === 'confirmation') {
+      return (
+        <ReservationConfirmation
+          currentUser={currentUser}
+          parkingData={parkingData}
+          reservationData={reservationData}
+          onNavigate={setCurrentPage}
         />
       )
     }
@@ -187,9 +211,9 @@ function App() {
   reservationId,
   paymentData
   ) {
-  setReservationData(
-    reservationData.map((reservation) =>
-      reservation.id === reservationId
+    setReservationData(
+      reservationData.map((reservation) =>
+        reservation.id === reservationId
         ? {
             ...reservation,
             status: 'Paid',
@@ -197,9 +221,11 @@ function App() {
             paymentAmount: paymentData.amount
           }
         : reservation
-    )
-  )
-  }
+      )
+   )
+
+    setCurrentPage('confirmation')
+    }
   if (!currentUser) {
     return <LoginPage onLogin={handleLogin} />
   }

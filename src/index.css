@@ -396,3 +396,77 @@ body {
 .payment-summary p {
   margin: 8px 0;
 }
+
+/* RESERVATION CONFIRMATION */
+.confirmation-card {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 40px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.confirmation-icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 32px;
+  font-weight: bold;
+  border: 2px solid #333;
+}
+
+.confirmation-card h2 {
+  margin-bottom: 10px;
+}
+
+.confirmation-message {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.confirmation-details {
+  text-align: left;
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row span {
+  color: #666;
+}
+
+.total-row {
+  font-size: 18px;
+}
+
+.confirmation-actions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.confirmation-actions button,
+.confirmation-card button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
