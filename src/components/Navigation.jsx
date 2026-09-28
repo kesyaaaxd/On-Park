@@ -132,6 +132,18 @@ function Navigation({
               >
                 My Reservations
               </button>
+              <button
+                className={
+                  currentPage === 'payment'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('payment')
+                }
+              >
+                Payment
+              </button>
             </>
           )}
 
