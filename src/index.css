@@ -318,3 +318,61 @@ body {
 .slot-card h3 {
   margin-top: 0;
 }
+
+.form-card form {
+  display: grid;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.form-card select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form-card button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.form-message {
+  margin: 0;
+}
+
+.reservation-table {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reservation-table-header,
+.reservation-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr;
+  gap: 15px;
+  padding: 15px 20px;
+  align-items: center;
+}
+
+.reservation-table-header {
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.reservation-table-row {
+  border-bottom: 1px solid #eee;
+}
+
+.reservation-table-row:last-child {
+  border-bottom: none;
+}

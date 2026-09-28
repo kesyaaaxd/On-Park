@@ -10,12 +10,14 @@ import Navigation from './components/Navigation'
 import Dashboard from './components/Dashboard'
 import ParkingLocationManager from './components/ParkingLocationManager'
 import ParkingSlotManager from './components/ParkingSlotManager'
+import ReservationManager from './components/ReservationManager'
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [currentPage, setCurrentPage] = useState('dashboard')
   const [parkingData, setParkingData] = useState(parkingLocations)
   const [slotData, setSlotData] = useState(parkingSlots)
+  const [reservationData, setReservationData] = useState(reservations)
 
   function handleLogin(formData) {
     const user = users.find(
@@ -44,7 +46,7 @@ function App() {
         <Dashboard
           currentUser={currentUser}
           parkingLocations={parkingData}
-          reservations={reservations}
+          reservations={reservationData}
         />
       )
     }
@@ -59,7 +61,7 @@ function App() {
         />
       )
     }
-
+  
     if (currentPage === 'slots') {
       return (
         <ParkingSlotManager
@@ -68,6 +70,18 @@ function App() {
           onAdd={handleAddSlot}
           onEdit={handleEditSlot}
           onDelete={handleDeleteSlot}
+        />
+      )
+    }
+  
+    if (currentPage === 'reservations') {
+      return (
+        <ReservationManager
+          currentUser={currentUser}
+          parkingData={parkingData}
+          slotData={slotData}
+          reservationData={reservationData}
+          onAddReservation={handleAddReservation}
         />
       )
     }
@@ -156,12 +170,23 @@ function App() {
     )
   }
 
+  function handleAddReservation(newReservationData) {
+    const newReservation = {
+      id: Date.now(),
+      ...newReservationData
+    }
+
+    setReservationData([
+      ...reservationData,
+      newReservation
+    ])
+  }
+
+
   if (!currentUser) {
     return <LoginPage onLogin={handleLogin} />
   }
   
-  
-
 }
 
 export default App

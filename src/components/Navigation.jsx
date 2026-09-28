@@ -107,6 +107,18 @@ function Navigation({
               >
                 Find Parking
               </button>
+              <button
+                className={
+                  currentPage === 'reservations'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('reservations')
+                }
+              >
+                Reservation
+              </button>
 
               <button
                 className={
