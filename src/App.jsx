@@ -13,6 +13,7 @@ import ParkingSlotManager from './components/ParkingSlotManager'
 import ReservationManager from './components/ReservationManager'
 import Payment from './components/Payment'
 import ReservationConfirmation from './components/ReservationConfirmation'
+import MyReservations from './components/MyReservations'
 
 
 function App() {
@@ -103,6 +104,17 @@ function App() {
     if (currentPage === 'confirmation') {
       return (
         <ReservationConfirmation
+          currentUser={currentUser}
+          parkingData={parkingData}
+          reservationData={reservationData}
+          onNavigate={setCurrentPage}
+        />
+      )
+    }
+    
+    if (currentPage === 'my-reservations') {
+      return (
+        <MyReservations
           currentUser={currentUser}
           parkingData={parkingData}
           reservationData={reservationData}

@@ -470,3 +470,97 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
+
+/* MY RESERVATIONS */
+.my-reservation-list {
+  display: grid;
+  gap: 20px;
+}
+
+.my-reservation-card {
+  padding: 25px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.reservation-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.reservation-card-header h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.reservation-card-header p {
+  margin: 0;
+  color: #666;
+}
+
+.reservation-status {
+  padding: 6px 10px;
+  border-radius: 5px;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.status-confirmed {
+  border: 1px solid #ddd;
+}
+
+.status-paid {
+  border: 1px solid #333;
+}
+
+.status-completed {
+  border: 1px solid #aaa;
+}
+
+.reservation-info {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  padding: 20px 0;
+}
+
+.reservation-info div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.reservation-info span {
+  color: #666;
+  font-size: 14px;
+}
+
+.payment-info {
+  padding: 15px;
+  margin-bottom: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+}
+
+.payment-info p {
+  margin: 5px 0;
+}
+
+.reservation-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.reservation-card-actions button,
+.form-card button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
