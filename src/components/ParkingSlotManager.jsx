@@ -1,4 +1,10 @@
 import { useState } from 'react'
+import {
+  Pencil,
+  Plus,
+  SquareParking,
+  Trash2
+} from 'lucide-react'
 
 function ParkingSlotManager({
   parkingData,
@@ -37,16 +43,16 @@ function ParkingSlotManager({
   function handleSubmit(event) {
     event.preventDefault()
 
-    const slotData = {
+    const newSlotData = {
       parkingId: Number(selectedParkingId),
       slotNumber: formData.slotNumber,
       status: formData.status
     }
 
     if (editingId) {
-      onEdit(editingId, slotData)
+      onEdit(editingId, newSlotData)
     } else {
-      onAdd(slotData)
+      onAdd(newSlotData)
     }
 
     resetForm()
@@ -76,6 +82,7 @@ function ParkingSlotManager({
         </div>
 
         <button
+          className="btn-primary"
           onClick={() => {
             setEditingId(null)
             setFormData({
@@ -85,18 +92,20 @@ function ParkingSlotManager({
             setShowForm(true)
           }}
         >
-          + Add Slot
+          <Plus size={16} />
+          Add Slot
         </button>
 
       </div>
 
       <div className="parking-selector">
 
-        <label>
+        <label htmlFor="slot-parking-select">
           Select Parking Location
         </label>
 
         <select
+          id="slot-parking-select"
           value={selectedParkingId}
           onChange={(event) =>
             setSelectedParkingId(event.target.value)
@@ -125,11 +134,12 @@ function ParkingSlotManager({
 
           <form onSubmit={handleSubmit}>
 
-            <label>
+            <label htmlFor="slot-number">
               Slot Number
             </label>
 
             <input
+              id="slot-number"
               type="text"
               placeholder="Example: A-01"
               value={formData.slotNumber}
@@ -142,11 +152,12 @@ function ParkingSlotManager({
               required
             />
 
-            <label>
+            <label htmlFor="slot-status">
               Status
             </label>
 
             <select
+              id="slot-status"
               value={formData.status}
               onChange={(event) =>
                 setFormData({
@@ -178,14 +189,21 @@ function ParkingSlotManager({
 
             <div className="form-actions">
 
-              <button type="submit">
-                {editingId
-                  ? 'Save Changes'
-                  : 'Add Slot'}
+              <button
+                type="submit"
+                className="btn-primary"
+              >
+                {editingId ? (
+                  <Pencil size={15} />
+                ) : (
+                  <Plus size={15} />
+                )}
+                {editingId ? 'Save Changes' : 'Add Slot'}
               </button>
 
               <button
                 type="button"
+                className="btn-ghost"
                 onClick={resetForm}
               >
                 Cancel
@@ -201,15 +219,29 @@ function ParkingSlotManager({
       <div className="slot-list">
 
         {filteredSlots.length === 0 ? (
-          <p>
-            No parking slots available for this location.
-          </p>
+          <div className="form-card empty-card">
+            <div className="icon-badge neutral lg">
+              <SquareParking size={28} />
+            </div>
+
+            <h3>No Slots Yet</h3>
+
+            <p>
+              No parking slots available for this location.
+            </p>
+          </div>
         ) : (
           filteredSlots.map((slot) => (
             <div
               className="slot-card"
               key={slot.id}
             >
+
+              <div
+                className={`icon-badge sm status-${slot.status.toLowerCase()}`}
+              >
+                <SquareParking size={16} />
+              </div>
 
               <div>
                 <h3>
@@ -224,14 +256,18 @@ function ParkingSlotManager({
               <div className="card-actions">
 
                 <button
+                  className="btn-ghost"
                   onClick={() => handleEdit(slot)}
                 >
+                  <Pencil size={14} />
                   Edit
                 </button>
 
                 <button
+                  className="btn-danger-ghost"
                   onClick={() => onDelete(slot.id)}
                 >
+                  <Trash2 size={14} />
                   Delete
                 </button>
 

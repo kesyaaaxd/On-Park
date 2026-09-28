@@ -1,3 +1,14 @@
+import {
+  Banknote,
+  Car,
+  CheckCircle2,
+  Clock,
+  CreditCard,
+  Plus,
+  ReceiptText,
+  SquareParking
+} from 'lucide-react'
+
 function MyReservations({
   currentUser,
   parkingData,
@@ -29,7 +40,11 @@ function MyReservations({
       </div>
 
       {myReservations.length === 0 ? (
-        <div className="form-card">
+        <div className="form-card empty-card">
+
+          <div className="icon-badge neutral lg">
+            <ReceiptText size={28} />
+          </div>
 
           <h3>
             No Reservations Yet
@@ -40,10 +55,12 @@ function MyReservations({
           </p>
 
           <button
+            className="btn-primary"
             onClick={() =>
               onNavigate('reservations')
             }
           >
+            <Plus size={16} />
             Make a Reservation
           </button>
 
@@ -88,7 +105,10 @@ function MyReservations({
                 <div className="reservation-info">
 
                   <div>
-                    <span>Parking Slot</span>
+                    <span>
+                      <SquareParking size={14} />
+                      Parking Slot
+                    </span>
 
                     <strong>
                       {reservation.slotNumber}
@@ -96,7 +116,10 @@ function MyReservations({
                   </div>
 
                   <div>
-                    <span>Time</span>
+                    <span>
+                      <Clock size={14} />
+                      Time
+                    </span>
 
                     <strong>
                       {reservation.startTime}
@@ -106,7 +129,10 @@ function MyReservations({
                   </div>
 
                   <div>
-                    <span>Vehicle</span>
+                    <span>
+                      <Car size={14} />
+                      Vehicle
+                    </span>
 
                     <strong>
                       {reservation.vehicleNumber}
@@ -118,22 +144,28 @@ function MyReservations({
                 {reservation.status === 'Paid' && (
                   <div className="payment-info">
 
-                    <p>
-                      Payment Method:{' '}
-                      <strong>
-                        {reservation.paymentMethod}
-                      </strong>
-                    </p>
+                    <div className="icon-badge success sm">
+                      <Banknote size={16} />
+                    </div>
 
-                    <p>
-                      Total Paid:{' '}
-                      <strong>
-                        Rp{' '}
-                        {reservation.paymentAmount?.toLocaleString(
-                          'id-ID'
-                        )}
-                      </strong>
-                    </p>
+                    <div>
+                      <p>
+                        Payment Method:{' '}
+                        <strong>
+                          {reservation.paymentMethod}
+                        </strong>
+                      </p>
+
+                      <p>
+                        Total Paid:{' '}
+                        <strong>
+                          Rp{' '}
+                          {reservation.paymentAmount?.toLocaleString(
+                            'id-ID'
+                          )}
+                        </strong>
+                      </p>
+                    </div>
 
                   </div>
                 )}
@@ -142,20 +174,24 @@ function MyReservations({
 
                   {reservation.status === 'Confirmed' && (
                     <button
+                      className="btn-primary"
                       onClick={() =>
                         onNavigate('payment')
                       }
                     >
+                      <CreditCard size={15} />
                       Pay Now
                     </button>
                   )}
 
                   {reservation.status === 'Paid' && (
                     <button
+                      className="btn-ghost"
                       onClick={() =>
                         onNavigate('confirmation')
                       }
                     >
+                      <CheckCircle2 size={15} />
                       View Confirmation
                     </button>
                   )}

@@ -1,3 +1,9 @@
+import {
+  ArrowLeft,
+  CheckCircle2,
+  ReceiptText
+} from 'lucide-react'
+
 function ReservationConfirmation({
   currentUser,
   parkingData,
@@ -19,13 +25,18 @@ function ReservationConfirmation({
 
         <div className="confirmation-card">
 
+          <div className="icon-badge neutral lg">
+            <ReceiptText size={30} />
+          </div>
+
           <h2>No Confirmation Available</h2>
 
-          <p>
+          <p className="confirmation-message">
             You don't have a paid reservation yet.
           </p>
 
           <button
+            className="btn-primary"
             onClick={() => onNavigate('reservations')}
           >
             Make a Reservation
@@ -48,7 +59,7 @@ function ReservationConfirmation({
       <div className="confirmation-card">
 
         <div className="confirmation-icon">
-          ✓
+          <CheckCircle2 size={38} />
         </div>
 
         <h2>
@@ -128,18 +139,22 @@ function ReservationConfirmation({
         <div className="confirmation-actions">
 
           <button
+            className="btn-ghost"
             onClick={() =>
               onNavigate('my-reservations')
             }
           >
+            <ReceiptText size={15} />
             My Reservations
           </button>
 
           <button
+            className="btn-primary"
             onClick={() =>
               onNavigate('dashboard')
             }
           >
+            <ArrowLeft size={15} />
             Back to Dashboard
           </button>
 

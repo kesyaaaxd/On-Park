@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import {
+  CalendarCheck,
+  Car
+} from 'lucide-react'
 
 function ReservationManager({
   currentUser,
@@ -66,9 +70,17 @@ function ReservationManager({
         </div>
 
         {reservationData.length === 0 ? (
-          <p>
-            No reservations yet.
-          </p>
+          <div className="form-card empty-card">
+            <div className="icon-badge neutral lg">
+              <CalendarCheck size={28} />
+            </div>
+
+            <h3>No Reservations Yet</h3>
+
+            <p>
+              No client reservations have been made.
+            </p>
+          </div>
         ) : (
           <div className="reservation-table">
 
@@ -111,7 +123,11 @@ function ReservationManager({
                   </span>
 
                   <span>
-                    {reservation.status}
+                    <span
+                      className={`table-badge status-${reservation.status.toLowerCase()}`}
+                    >
+                      {reservation.status}
+                    </span>
                   </span>
                 </div>
               )
@@ -141,11 +157,12 @@ function ReservationManager({
 
         <form onSubmit={handleSubmit}>
 
-          <label>
+          <label htmlFor="res-parking">
             Parking Location
           </label>
 
           <select
+            id="res-parking"
             value={formData.parkingId}
             onChange={(event) =>
               setFormData({
@@ -166,11 +183,12 @@ function ReservationManager({
             ))}
           </select>
 
-          <label>
+          <label htmlFor="res-slot">
             Parking Slot
           </label>
 
           <select
+            id="res-slot"
             value={formData.slotId}
             onChange={(event) =>
               setFormData({
@@ -200,11 +218,12 @@ function ReservationManager({
             </p>
           )}
 
-          <label>
+          <label htmlFor="res-start">
             Start Time
           </label>
 
           <input
+            id="res-start"
             type="time"
             value={formData.startTime}
             onChange={(event) =>
@@ -216,11 +235,12 @@ function ReservationManager({
             required
           />
 
-          <label>
+          <label htmlFor="res-end">
             End Time
           </label>
 
           <input
+            id="res-end"
             type="time"
             value={formData.endTime}
             onChange={(event) =>
@@ -232,11 +252,12 @@ function ReservationManager({
             required
           />
 
-          <label>
+          <label htmlFor="res-vehicle">
             Vehicle Number
           </label>
 
           <input
+            id="res-vehicle"
             type="text"
             placeholder="Example: B 1234 ABC"
             value={formData.vehicleNumber}
@@ -251,8 +272,10 @@ function ReservationManager({
 
           <button
             type="submit"
+            className="btn-primary"
             disabled={availableSlots.length === 0}
           >
+            <Car size={16} />
             Confirm Reservation
           </button>
 
