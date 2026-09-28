@@ -199,3 +199,180 @@ body {
   border-radius: 8px;
   border: 1px solid #ddd;
 }
+
+.page-container {
+  max-width: 1100px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.page-header h2 {
+  margin-bottom: 5px;
+}
+
+.page-header button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-card {
+  padding: 25px;
+  margin-bottom: 25px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.form-card form {
+  display: grid;
+  gap: 10px;
+}
+
+.form-card input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.form-actions button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.location-list {
+  display: grid;
+  gap: 15px;
+}
+
+.location-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.location-card h3 {
+  margin-top: 0;
+}
+
+.card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.card-actions button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.parking-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 25px;
+  max-width: 400px;
+}
+
+.parking-selector select,
+.form-card select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.slot-list {
+  display: grid;
+  gap: 15px;
+}
+
+.slot-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.slot-card h3 {
+  margin-top: 0;
+}
+
+.form-card form {
+  display: grid;
+  gap: 10px;
+  max-width: 600px;
+}
+
+.form-card select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form-card button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-card button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.form-message {
+  margin: 0;
+}
+
+.reservation-table {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reservation-table-header,
+.reservation-table-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr;
+  gap: 15px;
+  padding: 15px 20px;
+  align-items: center;
+}
+
+.reservation-table-header {
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+
+.reservation-table-row {
+  border-bottom: 1px solid #eee;
+}
+
+.reservation-table-row:last-child {
+  border-bottom: none;
+}

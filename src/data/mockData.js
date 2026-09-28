@@ -62,3 +62,54 @@ export const reservations = [
     status: 'Completed'
   }
 ]
+
+export const parkingSlots = [
+  {
+    id: 1,
+    parkingId: 1,
+    slotNumber: 'A-01',
+    status: 'Available'
+  },
+  {
+    id: 2,
+    parkingId: 1,
+    slotNumber: 'A-02',
+    status: 'Reserved'
+  },
+  {
+    id: 3,
+    parkingId: 1,
+    slotNumber: 'A-03',
+    status: 'Occupied'
+  },
+  {
+    id: 4,
+    parkingId: 1,
+    slotNumber: 'A-04',
+    status: 'Maintenance'
+  },
+  {
+    id: 5,
+    parkingId: 2,
+    slotNumber: 'B-01',
+    status: 'Available'
+  },
+  {
+    id: 6,
+    parkingId: 2,
+    slotNumber: 'B-02',
+    status: 'Held'
+  },
+  {
+    id: 7,
+    parkingId: 3,
+    slotNumber: 'C-01',
+    status: 'Available'
+  },
+  {
+    id: 8,
+    parkingId: 3,
+    slotNumber: 'C-02',
+    status: 'Occupied'
+  }
+]
