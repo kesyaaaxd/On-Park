@@ -14,6 +14,7 @@ import ReservationManager from './components/ReservationManager'
 import Payment from './components/Payment'
 import ReservationConfirmation from './components/ReservationConfirmation'
 import MyReservations from './components/MyReservations'
+import OccupancyMonitoring from './components/OccupancyMonitoring'
 
 
 function App() {
@@ -119,6 +120,15 @@ function App() {
           parkingData={parkingData}
           reservationData={reservationData}
           onNavigate={setCurrentPage}
+        />
+      )
+    }
+
+    if (currentPage === 'occupancy') {
+      return (
+        <OccupancyMonitoring
+          parkingData={parkingData}
+          slotData={slotData}
         />
       )
     }

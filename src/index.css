@@ -564,3 +564,72 @@ body {
   border-radius: 6px;
   cursor: pointer;
 }
+
+
+/* OCCUPANCY MONITORING */
+.occupancy-summary {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.occupancy-card {
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.occupancy-card span {
+  display: block;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.occupancy-card strong {
+  font-size: 28px;
+}
+
+.occupancy-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.occupancy-header h3 {
+  margin-bottom: 5px;
+}
+
+.occupancy-header p {
+  margin: 0;
+  color: #666;
+}
+
+.slot-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 15px;
+}
+
+.occupancy-slot {
+  min-height: 110px;
+  padding: 20px;
+  background-color: white;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.occupancy-slot strong {
+  font-size: 20px;
+}
+
+.occupancy-slot span {
+  font-size: 14px;
+}
