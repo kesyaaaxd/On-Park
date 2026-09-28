@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import {
+  Banknote,
+  CreditCard
+} from 'lucide-react'
 
 function Payment({
   currentUser,
@@ -95,13 +99,19 @@ function Payment({
       </div>
 
       {clientReservations.length === 0 ? (
-        <div className="form-card">
+        <div className="form-card empty-card">
+
+          <div className="icon-badge neutral lg">
+            <Banknote size={28} />
+          </div>
+
           <h3>No Pending Payment</h3>
 
           <p>
             You don't have any confirmed reservations
             waiting for payment.
           </p>
+
         </div>
       ) : (
         <div className="payment-layout">
@@ -114,11 +124,12 @@ function Payment({
 
             <form onSubmit={handleSubmit}>
 
-              <label>
+              <label htmlFor="pay-reservation">
                 Reservation
               </label>
 
               <select
+                id="pay-reservation"
                 value={selectedReservationId}
                 onChange={(event) =>
                   setSelectedReservationId(
@@ -151,6 +162,7 @@ function Payment({
                 <div className="payment-summary">
 
                   <h3>
+                    <Banknote size={14} />
                     Payment Summary
                   </h3>
 
@@ -187,7 +199,7 @@ function Payment({
                     hour(s)
                   </p>
 
-                  <h3>
+                  <h3 className="total-line">
                     Total:{' '}
                     Rp{' '}
                     {(
@@ -203,11 +215,12 @@ function Payment({
                 </div>
               )}
 
-              <label>
+              <label htmlFor="pay-method">
                 Payment Method
               </label>
 
               <select
+                id="pay-method"
                 value={paymentMethod}
                 onChange={(event) =>
                   setPaymentMethod(
@@ -230,8 +243,10 @@ function Payment({
 
               <button
                 type="submit"
+                className="btn-primary"
                 disabled={!selectedReservation}
               >
+                <CreditCard size={16} />
                 Pay Now
               </button>
 

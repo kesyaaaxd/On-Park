@@ -1,4 +1,10 @@
 import { useState } from 'react'
+import {
+  CircleParking,
+  LogIn,
+  User,
+  Lock
+} from 'lucide-react'
 
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({
@@ -22,6 +28,10 @@ function Login({ onLogin }) {
     <div className="login-container">
       <div className="login-card">
 
+        <div className="icon-badge brand lg">
+          <CircleParking size={30} strokeWidth={2} />
+        </div>
+
         <h1>ON PARK</h1>
         <p className="login-subtitle">
           Smart Parking Platform
@@ -32,33 +42,41 @@ function Login({ onLogin }) {
 
         <form onSubmit={handleSubmit}>
 
-          <label>Username</label>
+          <label htmlFor="login-username">Username</label>
 
-          <input
-            type="text"
-            placeholder="Enter your username"
-            value={formData.username}
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                username: event.target.value
-              })
-            }
-          />
+          <div className="input-icon-wrap">
+            <input
+              id="login-username"
+              type="text"
+              placeholder="Enter your username"
+              value={formData.username}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  username: event.target.value
+                })
+              }
+            />
+            <User size={16} className="input-icon" />
+          </div>
 
-          <label>Password</label>
+          <label htmlFor="login-password">Password</label>
 
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={formData.password}
-            onChange={(event) =>
-              setFormData({
-                ...formData,
-                password: event.target.value
-              })
-            }
-          />
+          <div className="input-icon-wrap">
+            <input
+              id="login-password"
+              type="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={(event) =>
+                setFormData({
+                  ...formData,
+                  password: event.target.value
+                })
+              }
+            />
+            <Lock size={16} className="input-icon" />
+          </div>
 
           {errorMessage && (
             <p className="error-message">
@@ -66,7 +84,11 @@ function Login({ onLogin }) {
             </p>
           )}
 
-          <button type="submit">
+          <button
+            type="submit"
+            className="btn-primary"
+          >
+            <LogIn size={16} />
             Login
           </button>
 

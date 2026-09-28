@@ -1,4 +1,12 @@
 import { useState } from 'react'
+import {
+  CalendarCheck,
+  Car,
+  CircleCheck,
+  Clock,
+  MapPin,
+  Wrench
+} from 'lucide-react'
 
 function OccupancyMonitoring({
   parkingData,
@@ -39,6 +47,44 @@ function OccupancyMonitoring({
     (slot) => slot.status === 'Maintenance'
   ).length
 
+  const summaryCards = [
+    {
+      key: 'available',
+      label: 'Available',
+      count: availableCount,
+      badge: 'success',
+      icon: CircleCheck
+    },
+    {
+      key: 'held',
+      label: 'Held',
+      count: heldCount,
+      badge: 'warning',
+      icon: Clock
+    },
+    {
+      key: 'reserved',
+      label: 'Reserved',
+      count: reservedCount,
+      badge: 'info',
+      icon: CalendarCheck
+    },
+    {
+      key: 'occupied',
+      label: 'Occupied',
+      count: occupiedCount,
+      badge: 'danger',
+      icon: Car
+    },
+    {
+      key: 'maintenance',
+      label: 'Maintenance',
+      count: maintenanceCount,
+      badge: 'neutral',
+      icon: Wrench
+    }
+  ]
+
   return (
     <div className="page-container">
 
@@ -56,11 +102,12 @@ function OccupancyMonitoring({
 
       <div className="parking-selector">
 
-        <label>
+        <label htmlFor="occupancy-parking-select">
           Select Parking Location
         </label>
 
         <select
+          id="occupancy-parking-select"
           value={selectedParkingId}
           onChange={(event) =>
             setSelectedParkingId(
@@ -84,30 +131,26 @@ function OccupancyMonitoring({
         <>
           <div className="occupancy-summary">
 
-            <div className="occupancy-card">
-              <span>Available</span>
-              <strong>{availableCount}</strong>
-            </div>
+            {summaryCards.map((card) => {
+              const Icon = card.icon
 
-            <div className="occupancy-card">
-              <span>Held</span>
-              <strong>{heldCount}</strong>
-            </div>
+              return (
+                <div
+                  className="occupancy-card"
+                  key={card.key}
+                >
+                  <div
+                    className={`icon-badge sm ${card.badge}`}
+                  >
+                    <Icon size={16} />
+                  </div>
 
-            <div className="occupancy-card">
-              <span>Reserved</span>
-              <strong>{reservedCount}</strong>
-            </div>
+                  <span>{card.label}</span>
 
-            <div className="occupancy-card">
-              <span>Occupied</span>
-              <strong>{occupiedCount}</strong>
-            </div>
-
-            <div className="occupancy-card">
-              <span>Maintenance</span>
-              <strong>{maintenanceCount}</strong>
-            </div>
+                  <strong>{card.count}</strong>
+                </div>
+              )
+            })}
 
           </div>
 
@@ -119,6 +162,7 @@ function OccupancyMonitoring({
               </h3>
 
               <p>
+                <MapPin size={13} />
                 {selectedParking.address}
               </p>
             </div>
@@ -136,9 +180,17 @@ function OccupancyMonitoring({
           <div className="slot-grid">
 
             {parkingSlots.length === 0 ? (
-              <p>
-                No slots available for this location.
-              </p>
+              <div className="form-card empty-card">
+                <div className="icon-badge neutral lg">
+                  <CircleCheck size={28} />
+                </div>
+
+                <h3>No Slots</h3>
+
+                <p>
+                  No slots available for this location.
+                </p>
+              </div>
             ) : (
               parkingSlots.map((slot) => (
                 <div

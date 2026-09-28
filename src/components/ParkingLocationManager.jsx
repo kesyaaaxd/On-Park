@@ -1,4 +1,10 @@
 import { useState } from 'react'
+import {
+  MapPin,
+  Pencil,
+  Plus,
+  Trash2
+} from 'lucide-react'
 
 function ParkingLocationManager({
   parkingData,
@@ -76,12 +82,14 @@ function ParkingLocationManager({
         </div>
 
         <button
+          className="btn-primary"
           onClick={() => {
             setEditingId(null)
             setShowForm(true)
           }}
         >
-          + Add Location
+          <Plus size={16} />
+          Add Location
         </button>
       </div>
 
@@ -96,9 +104,10 @@ function ParkingLocationManager({
 
           <form onSubmit={handleSubmit}>
 
-            <label>Parking Name</label>
+            <label htmlFor="loc-name">Parking Name</label>
 
             <input
+              id="loc-name"
               type="text"
               value={formData.name}
               onChange={(event) =>
@@ -110,9 +119,10 @@ function ParkingLocationManager({
               required
             />
 
-            <label>Address</label>
+            <label htmlFor="loc-address">Address</label>
 
             <input
+              id="loc-address"
               type="text"
               value={formData.address}
               onChange={(event) =>
@@ -124,9 +134,10 @@ function ParkingLocationManager({
               required
             />
 
-            <label>Total Slots</label>
+            <label htmlFor="loc-total">Total Slots</label>
 
             <input
+              id="loc-total"
               type="number"
               value={formData.totalSlots}
               onChange={(event) =>
@@ -138,9 +149,10 @@ function ParkingLocationManager({
               required
             />
 
-            <label>Available Slots</label>
+            <label htmlFor="loc-available">Available Slots</label>
 
             <input
+              id="loc-available"
               type="number"
               value={formData.availableSlots}
               onChange={(event) =>
@@ -152,9 +164,10 @@ function ParkingLocationManager({
               required
             />
 
-            <label>Price per Hour</label>
+            <label htmlFor="loc-price">Price per Hour</label>
 
             <input
+              id="loc-price"
               type="number"
               value={formData.pricePerHour}
               onChange={(event) =>
@@ -168,12 +181,21 @@ function ParkingLocationManager({
 
             <div className="form-actions">
 
-              <button type="submit">
+              <button
+                type="submit"
+                className="btn-primary"
+              >
+                {editingId ? (
+                  <Pencil size={15} />
+                ) : (
+                  <Plus size={15} />
+                )}
                 {editingId ? 'Save Changes' : 'Add Location'}
               </button>
 
               <button
                 type="button"
+                className="btn-ghost"
                 onClick={resetForm}
               >
                 Cancel
@@ -193,7 +215,11 @@ function ParkingLocationManager({
             key={parking.id}
           >
 
-            <div>
+            <div className="icon-badge info">
+              <MapPin size={19} />
+            </div>
+
+            <div className="location-card-body">
               <h3>{parking.name}</h3>
 
               <p>{parking.address}</p>
@@ -212,14 +238,18 @@ function ParkingLocationManager({
             <div className="card-actions">
 
               <button
+                className="btn-ghost"
                 onClick={() => handleEdit(parking)}
               >
+                <Pencil size={14} />
                 Edit
               </button>
 
               <button
+                className="btn-danger-ghost"
                 onClick={() => onDelete(parking.id)}
               >
+                <Trash2 size={14} />
                 Delete
               </button>
 

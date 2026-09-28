@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import {
   users,
   parkingLocations,
@@ -16,13 +17,43 @@ import ReservationConfirmation from './components/ReservationConfirmation'
 import MyReservations from './components/MyReservations'
 import OccupancyMonitoring from './components/OccupancyMonitoring'
 
+const KNOWN_PAGES = [
+  'dashboard',
+  'locations',
+  'slots',
+  'reservations',
+  'payment',
+  'confirmation',
+  'my-reservations',
+  'occupancy',
+  'find-parking'
+]
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null)
-  const [currentPage, setCurrentPage] = useState('dashboard')
+  const [currentUser, setCurrentUser] = useState(() => {
+    try {
+      const saved = localStorage.getItem('onpark_user')
+      return saved ? JSON.parse(saved) : null
+    } catch {
+      return null
+    }
+  })
   const [parkingData, setParkingData] = useState(parkingLocations)
   const [slotData, setSlotData] = useState(parkingSlots)
   const [reservationData, setReservationData] = useState(reservations)
+
+  // Page is now driven by the URL hash (HashRouter) instead of local state,
+  // so refreshing any page keeps the user where they are.
+  const location = useLocation()
+  const navigate = useNavigate()
+  const currentPage = location.pathname.replace(/^\//, '')
+
+  // No hash yet (e.g. first load or after login): land on the dashboard.
+  useEffect(() => {
+    if (currentUser && currentPage === '') {
+      navigate('/dashboard', { replace: true })
+    }
+  }, [currentUser, currentPage, navigate])
 
   function handleLogin(formData) {
     const user = users.find(
@@ -33,7 +64,8 @@ function App() {
 
     if (user) {
       setCurrentUser(user)
-      setCurrentPage('dashboard')
+      localStorage.setItem('onpark_user', JSON.stringify(user))
+      navigate('/dashboard')
       return true
     }
 
@@ -42,101 +74,123 @@ function App() {
 
   function handleLogout() {
     setCurrentUser(null)
-    setCurrentPage('dashboard')
+    localStorage.removeItem('onpark_user')
+    navigate('/dashboard')
   }
 
   function renderPage() {
-    if (currentPage === 'dashboard') {
-      return (
-        <Dashboard
-          currentUser={currentUser}
-          parkingLocations={parkingData}
-          reservations={reservationData}
-        />
-      )
-    }
-  
-    if (currentPage === 'locations') {
-      return (
-        <ParkingLocationManager
-          parkingData={parkingData}
-          onAdd={handleAddLocation}
-          onEdit={handleEditLocation}
-          onDelete={handleDeleteLocation}
-        />
-      )
-    }
-  
-    if (currentPage === 'slots') {
-      return (
-        <ParkingSlotManager
-          parkingData={parkingData}
-          slotData={slotData}
-          onAdd={handleAddSlot}
-          onEdit={handleEditSlot}
-          onDelete={handleDeleteSlot}
-        />
-      )
-    }
-  
-    if (currentPage === 'reservations') {
-      return (
-        <ReservationManager
-          currentUser={currentUser}
-          parkingData={parkingData}
-          slotData={slotData}
-          reservationData={reservationData}
-          onAddReservation={handleAddReservation}
-        />
-      )
-    }
-  
-    if (currentPage === 'payment') {
-      return (
-        <Payment
-          currentUser={currentUser}
-          parkingData={parkingData}
-          reservationData={reservationData}
-          onPayment={handlePayment}
-        />
-      )
-    }
-  
-    if (currentPage === 'confirmation') {
-      return (
-        <ReservationConfirmation
-          currentUser={currentUser}
-          parkingData={parkingData}
-          reservationData={reservationData}
-          onNavigate={setCurrentPage}
-        />
-      )
-    }
-    
-    if (currentPage === 'my-reservations') {
-      return (
-        <MyReservations
-          currentUser={currentUser}
-          parkingData={parkingData}
-          reservationData={reservationData}
-          onNavigate={setCurrentPage}
-        />
-      )
+    if (KNOWN_PAGES.includes(currentPage)) {
+      if (currentPage === 'dashboard') {
+        return (
+          <Dashboard
+            currentUser={currentUser}
+            parkingLocations={parkingData}
+            reservations={reservationData}
+          />
+        )
+      }
+
+      if (currentPage === 'locations') {
+        return (
+          <ParkingLocationManager
+            parkingData={parkingData}
+            onAdd={handleAddLocation}
+            onEdit={handleEditLocation}
+            onDelete={handleDeleteLocation}
+          />
+        )
+      }
+
+      if (currentPage === 'slots') {
+        return (
+          <ParkingSlotManager
+            parkingData={parkingData}
+            slotData={slotData}
+            onAdd={handleAddSlot}
+            onEdit={handleEditSlot}
+            onDelete={handleDeleteSlot}
+          />
+        )
+      }
+
+      if (currentPage === 'reservations') {
+        return (
+          <ReservationManager
+            currentUser={currentUser}
+            parkingData={parkingData}
+            slotData={slotData}
+            reservationData={reservationData}
+            onAddReservation={handleAddReservation}
+          />
+        )
+      }
+
+      if (currentPage === 'payment') {
+        return (
+          <Payment
+            currentUser={currentUser}
+            parkingData={parkingData}
+            reservationData={reservationData}
+            onPayment={handlePayment}
+          />
+        )
+      }
+
+      if (currentPage === 'confirmation') {
+        return (
+          <ReservationConfirmation
+            currentUser={currentUser}
+            parkingData={parkingData}
+            reservationData={reservationData}
+            onNavigate={onNavigatePage}
+          />
+        )
+      }
+
+      if (currentPage === 'my-reservations') {
+        return (
+          <MyReservations
+            currentUser={currentUser}
+            parkingData={parkingData}
+            reservationData={reservationData}
+            onNavigate={onNavigatePage}
+          />
+        )
+      }
+
+      if (currentPage === 'occupancy') {
+        return (
+          <OccupancyMonitoring
+            parkingData={parkingData}
+            slotData={slotData}
+          />
+        )
+      }
+
+      if (currentPage === 'find-parking') {
+        return (
+          <div>
+            <h2>Coming Soon</h2>
+            <p>This page will be built next.</p>
+          </div>
+        )
+      }
     }
 
-    if (currentPage === 'occupancy') {
-      return (
-        <OccupancyMonitoring
-          parkingData={parkingData}
-          slotData={slotData}
-        />
-      )
-    }
-  
+    // 404 fallback: unknown routes land here with a way back.
     return (
-      <div>
-        <h2>Coming Soon</h2>
-        <p>This page will be built next.</p>
+      <div className="empty-state">
+        <h2>Page Not Found</h2>
+        <p>
+          The page you are looking for does not exist
+          {' '}(<code>{location.pathname}</code>).
+        </p>
+        <button
+          className="btn-primary"
+          onClick={() => navigate('/dashboard')}
+        >
+          Back to Dashboard
+        </button>
       </div>
     )
   }
@@ -153,47 +207,32 @@ function App() {
       ])
   }
 
-   function handleEditLocation(id, locationData) {
-  setParkingData(
-    parkingData.map((parking) =>
-      parking.id === id
-        ? {
-            ...parking,
-            ...locationData
-          }
-        : parking
+  function handleEditLocation(id, locationData) {
+    setParkingData(
+      parkingData.map((parking) =>
+        parking.id === id
+          ? {
+              ...parking,
+              ...locationData
+            }
+          : parking
+        )
       )
-    )
   }
 
   function handleDeleteLocation(id) {
-  setParkingData(
-    parkingData.filter(
-      (parking) => parking.id !== id
+    setParkingData(
+      parkingData.filter(
+        (parking) => parking.id !== id
+        )
       )
-    )
   }
-
-  if (!currentUser) {
-    return <LoginPage onLogin={handleLogin} />
-  }
-  
-  return (
-    <Navigation
-      currentUser={currentUser}
-      currentPage={currentPage}
-      onNavigate={setCurrentPage}
-      onLogout={handleLogout}
-    >
-      {renderPage()}
-    </Navigation>
-  )
 
   function handleAddSlot(newSlotData) {
-   const newSlot = {
+    const newSlot = {
       id: Date.now(),
-     ...newSlotData
-   }
+      ...newSlotData
+    }
 
     setSlotData([
       ...slotData,
@@ -202,24 +241,24 @@ function App() {
   }
 
   function handleEditSlot(id, updatedSlotData) {
-  setSlotData(
-    slotData.map((slot) =>
-      slot.id === id
-        ? {
-            ...slot,
-            ...updatedSlotData
-          }
-        : slot
+    setSlotData(
+      slotData.map((slot) =>
+        slot.id === id
+          ? {
+              ...slot,
+              ...updatedSlotData
+            }
+          : slot
+      )
     )
-  )
   }
 
   function handleDeleteSlot(id) {
-  setSlotData(
-    slotData.filter(
-      (slot) => slot.id !== id
+    setSlotData(
+      slotData.filter(
+        (slot) => slot.id !== id
+        )
       )
-    )
   }
 
   function handleAddReservation(newReservationData) {
@@ -235,26 +274,44 @@ function App() {
   }
 
   function handlePayment(
-  reservationId,
-  paymentData
+    reservationId,
+    paymentData
   ) {
     setReservationData(
       reservationData.map((reservation) =>
         reservation.id === reservationId
-        ? {
-            ...reservation,
-            status: 'Paid',
-            paymentMethod: paymentData.method,
-            paymentAmount: paymentData.amount
-          }
-        : reservation
+          ? {
+              ...reservation,
+              status: 'Paid',
+              paymentMethod: paymentData.method,
+              paymentAmount: paymentData.amount
+            }
+          : reservation
       )
-   )
+     )
 
-    setCurrentPage('confirmation')
-    }
-  
-  
+    navigate('/confirmation')
+  }
+
+  // Components (MyReservations, ReservationConfirmation) still call
+  // onNavigate with a page name, e.g. onNavigate('payment').
+  function onNavigatePage(page) {
+    navigate('/' + page)
+  }
+
+  if (!currentUser) {
+    return <LoginPage onLogin={handleLogin} />
+  }
+
+  return (
+    <Navigation
+      currentUser={currentUser}
+      currentPage={KNOWN_PAGES.includes(currentPage) ? currentPage : ''}
+      onLogout={handleLogout}
+    >
+      {renderPage()}
+    </Navigation>
+  )
 }
 
 export default App

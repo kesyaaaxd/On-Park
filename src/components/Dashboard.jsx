@@ -1,3 +1,10 @@
+import {
+  CalendarClock,
+  Car,
+  MapPin,
+  Search
+} from 'lucide-react'
+
 function Dashboard({ currentUser, parkingLocations, reservations }) {
   const isAdmin = currentUser.role === 'Administrator'
 
@@ -22,18 +29,33 @@ function Dashboard({ currentUser, parkingLocations, reservations }) {
         <div className="dashboard-cards">
 
           <div className="dashboard-card">
-            <h3>Parking Locations</h3>
-            <p>{totalLocations}</p>
+            <div className="icon-badge brand">
+              <MapPin size={20} />
+            </div>
+            <div>
+              <h3>Parking Locations</h3>
+              <p>{totalLocations}</p>
+            </div>
           </div>
 
           <div className="dashboard-card">
-            <h3>Parking Slots</h3>
-            <p>{totalSlots}</p>
+            <div className="icon-badge info">
+              <Car size={20} />
+            </div>
+            <div>
+              <h3>Parking Slots</h3>
+              <p>{totalSlots}</p>
+            </div>
           </div>
 
           <div className="dashboard-card">
-            <h3>Reservations</h3>
-            <p>{totalReservations}</p>
+            <div className="icon-badge success">
+              <CalendarClock size={20} />
+            </div>
+            <div>
+              <h3>Reservations</h3>
+              <p>{totalReservations}</p>
+            </div>
           </div>
 
         </div>
@@ -62,6 +84,10 @@ function Dashboard({ currentUser, parkingLocations, reservations }) {
             className="parking-card"
             key={parking.id}
           >
+            <div className="icon-badge brand">
+              <MapPin size={19} />
+            </div>
+
             <h3>{parking.name}</h3>
 
             <p>{parking.address}</p>
@@ -70,12 +96,13 @@ function Dashboard({ currentUser, parkingLocations, reservations }) {
               {parking.availableSlots} slots available
             </p>
 
-            <p>
+            <p className="parking-price">
               Rp {parking.pricePerHour.toLocaleString('id-ID')}
               /hour
             </p>
 
-            <button>
+            <button className="btn-ghost">
+              <Search size={15} />
               View Parking
             </button>
           </div>
@@ -92,17 +119,23 @@ function Dashboard({ currentUser, parkingLocations, reservations }) {
             className="reservation-item"
             key={reservation.id}
           >
-            <p>
-              Slot: {reservation.slotNumber}
-            </p>
+            <div className="icon-badge sm neutral">
+              <CalendarClock size={16} />
+            </div>
 
-            <p>
-              {reservation.startTime} - {reservation.endTime}
-            </p>
+            <div>
+              <p>
+                Slot: <strong>{reservation.slotNumber}</strong>
+              </p>
 
-            <p>
-              Status: {reservation.status}
-            </p>
+              <p>
+                {reservation.startTime} - {reservation.endTime}
+              </p>
+
+              <p>
+                Status: {reservation.status}
+              </p>
+            </div>
           </div>
         ))
       )}
