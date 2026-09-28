@@ -3,10 +3,13 @@ import { users, parkingLocations, reservations } from './data/mockData'
 import LoginPage from './pages/LoginPage'
 import Navigation from './components/Navigation'
 import Dashboard from './components/Dashboard'
+import ParkingLocationManager from './components/ParkingLocationManager'
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [currentPage, setCurrentPage] = useState('dashboard')
+  const [parkingData, setParkingData] = useState(parkingLocations)
+
 
   function handleLogin(formData) {
     const user = users.find(
@@ -34,12 +37,23 @@ function App() {
       return (
         <Dashboard
           currentUser={currentUser}
-          parkingLocations={parkingLocations}
+          parkingLocations={parkingData}
           reservations={reservations}
         />
       )
     }
-
+  
+    if (currentPage === 'locations') {
+      return (
+        <ParkingLocationManager
+          parkingData={parkingData}
+          onAdd={handleAddLocation}
+          onEdit={handleEditLocation}
+          onDelete={handleDeleteLocation}
+        />
+      )
+    }
+  
     return (
       <div>
         <h2>Coming Soon</h2>
@@ -47,11 +61,41 @@ function App() {
       </div>
     )
   }
-
   if (!currentUser) {
     return <LoginPage onLogin={handleLogin} />
   }
+function handleAddLocation(locationData) {
+  const newLocation = {
+    id: Date.now(),
+    ...locationData
+  }
 
+  setParkingData([
+    ...parkingData,
+    newLocation
+  ])
+}
+
+function handleEditLocation(id, locationData) {
+  setParkingData(
+    parkingData.map((parking) =>
+      parking.id === id
+        ? {
+            ...parking,
+            ...locationData
+          }
+        : parking
+    )
+  )
+}
+
+function handleDeleteLocation(id) {
+  setParkingData(
+    parkingData.filter(
+      (parking) => parking.id !== id
+    )
+  )
+}
   return (
     <Navigation
       currentUser={currentUser}
