@@ -11,6 +11,7 @@ import Dashboard from './components/Dashboard'
 import ParkingLocationManager from './components/ParkingLocationManager'
 import ParkingSlotManager from './components/ParkingSlotManager'
 import ReservationManager from './components/ReservationManager'
+import Payment from './components/Payment'
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -182,7 +183,23 @@ function App() {
     ])
   }
 
-
+  function handlePayment(
+  reservationId,
+  paymentData
+  ) {
+  setReservationData(
+    reservationData.map((reservation) =>
+      reservation.id === reservationId
+        ? {
+            ...reservation,
+            status: 'Paid',
+            paymentMethod: paymentData.method,
+            paymentAmount: paymentData.amount
+          }
+        : reservation
+    )
+  )
+  }
   if (!currentUser) {
     return <LoginPage onLogin={handleLogin} />
   }
