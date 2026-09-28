@@ -77,6 +77,8 @@ body {
   cursor: pointer;
 }
 
+/*APP LAYOUT*/
+
 .app-layout {
   min-height: 100vh;
 }
@@ -138,4 +140,62 @@ body {
 .main-content {
   flex: 1;
   padding: 30px;
+}
+
+/* DASHBOARD */
+
+.dashboard h2 {
+  margin-top: 0;
+}
+
+.dashboard-cards {
+  display: flex;
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.dashboard-card {
+  flex: 1;
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.dashboard-card h3 {
+  margin-top: 0;
+}
+
+.dashboard-card p {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.parking-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.parking-card {
+  padding: 20px;
+  background-color: white;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+}
+
+.parking-card button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.reservation-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  background-color: white;
+  border-radius: 8px;
+  border: 1px solid #ddd;
 }

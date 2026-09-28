@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { users } from './data/mockData'
+import { users, parkingLocations, reservations } from './data/mockData'
 import LoginPage from './pages/LoginPage'
 import Navigation from './components/Navigation'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -28,6 +29,25 @@ function App() {
     setCurrentPage('dashboard')
   }
 
+  function renderPage() {
+    if (currentPage === 'dashboard') {
+      return (
+        <Dashboard
+          currentUser={currentUser}
+          parkingLocations={parkingLocations}
+          reservations={reservations}
+        />
+      )
+    }
+
+    return (
+      <div>
+        <h2>Coming Soon</h2>
+        <p>This page will be built next.</p>
+      </div>
+    )
+  }
+
   if (!currentUser) {
     return <LoginPage onLogin={handleLogin} />
   }
@@ -38,7 +58,9 @@ function App() {
       currentPage={currentPage}
       onNavigate={setCurrentPage}
       onLogout={handleLogout}
-    />
+    >
+      {renderPage()}
+    </Navigation>
   )
 }
 

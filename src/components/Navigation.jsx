@@ -1,4 +1,10 @@
-function Navigation({ currentUser, currentPage, onNavigate, onLogout }) {
+function Navigation({
+  currentUser,
+  currentPage,
+  onNavigate,
+  onLogout,
+  children
+}) {
   const isAdmin = currentUser.role === 'Administrator'
 
   return (
@@ -8,7 +14,10 @@ function Navigation({ currentUser, currentPage, onNavigate, onLogout }) {
         <h1>ON PARK</h1>
 
         <div className="user-section">
-          <span>{currentUser.username}</span>
+          <span>
+            {currentUser.username}
+          </span>
+
           <button onClick={onLogout}>
             Logout
           </button>
@@ -20,7 +29,11 @@ function Navigation({ currentUser, currentPage, onNavigate, onLogout }) {
         <aside className="sidebar">
 
           <button
-            className={currentPage === 'dashboard' ? 'active' : ''}
+            className={
+              currentPage === 'dashboard'
+                ? 'active'
+                : ''
+            }
             onClick={() => onNavigate('dashboard')}
           >
             Dashboard
@@ -29,29 +42,53 @@ function Navigation({ currentUser, currentPage, onNavigate, onLogout }) {
           {isAdmin ? (
             <>
               <button
-                className={currentPage === 'locations' ? 'active' : ''}
-                onClick={() => onNavigate('locations')}
+                className={
+                  currentPage === 'locations'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('locations')
+                }
               >
                 Parking Locations
               </button>
 
               <button
-                className={currentPage === 'slots' ? 'active' : ''}
-                onClick={() => onNavigate('slots')}
+                className={
+                  currentPage === 'slots'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('slots')
+                }
               >
                 Parking Slots
               </button>
 
               <button
-                className={currentPage === 'reservations' ? 'active' : ''}
-                onClick={() => onNavigate('reservations')}
+                className={
+                  currentPage === 'reservations'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('reservations')
+                }
               >
                 Reservations
               </button>
 
               <button
-                className={currentPage === 'occupancy' ? 'active' : ''}
-                onClick={() => onNavigate('occupancy')}
+                className={
+                  currentPage === 'occupancy'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('occupancy')
+                }
               >
                 Occupancy Monitoring
               </button>
@@ -59,15 +96,27 @@ function Navigation({ currentUser, currentPage, onNavigate, onLogout }) {
           ) : (
             <>
               <button
-                className={currentPage === 'find-parking' ? 'active' : ''}
-                onClick={() => onNavigate('find-parking')}
+                className={
+                  currentPage === 'find-parking'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('find-parking')
+                }
               >
                 Find Parking
               </button>
 
               <button
-                className={currentPage === 'my-reservations' ? 'active' : ''}
-                onClick={() => onNavigate('my-reservations')}
+                className={
+                  currentPage === 'my-reservations'
+                    ? 'active'
+                    : ''
+                }
+                onClick={() =>
+                  onNavigate('my-reservations')
+                }
               >
                 My Reservations
               </button>
@@ -77,25 +126,7 @@ function Navigation({ currentUser, currentPage, onNavigate, onLogout }) {
         </aside>
 
         <main className="main-content">
-          <h2>
-            {currentPage === 'dashboard'
-              ? 'Dashboard'
-              : currentPage === 'locations'
-              ? 'Parking Locations'
-              : currentPage === 'slots'
-              ? 'Parking Slots'
-              : currentPage === 'reservations'
-              ? 'Reservations'
-              : currentPage === 'occupancy'
-              ? 'Occupancy Monitoring'
-              : currentPage === 'find-parking'
-              ? 'Find Parking'
-              : 'My Reservations'}
-          </h2>
-
-          <p>
-            Current page: {currentPage}
-          </p>
+          {children}
         </main>
 
       </div>
