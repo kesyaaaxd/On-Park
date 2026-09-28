@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { users } from './data/mockData'
 import LoginPage from './pages/LoginPage'
+import Navigation from './components/Navigation'
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
+  const [currentPage, setCurrentPage] = useState('dashboard')
 
   function handleLogin(formData) {
     const user = users.find(
@@ -14,28 +16,29 @@ function App() {
 
     if (user) {
       setCurrentUser(user)
+      setCurrentPage('dashboard')
       return true
     }
 
     return false
   }
 
-  if (currentUser) {
-    return (
-      <div>
-        <h1>Welcome to On Park!</h1>
-        <p>
-          Logged in as: {currentUser.username}
-        </p>
-        <p>
-          Role: {currentUser.role}
-        </p>
-      </div>
-    )
+  function handleLogout() {
+    setCurrentUser(null)
+    setCurrentPage('dashboard')
+  }
+
+  if (!currentUser) {
+    return <LoginPage onLogin={handleLogin} />
   }
 
   return (
-    <LoginPage onLogin={handleLogin} />
+    <Navigation
+      currentUser={currentUser}
+      currentPage={currentPage}
+      onNavigate={setCurrentPage}
+      onLogout={handleLogout}
+    />
   )
 }
 
