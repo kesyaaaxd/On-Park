@@ -173,6 +173,11 @@ function App() {
       )
     )
   }
+
+  if (!currentUser) {
+    return <LoginPage onLogin={handleLogin} />
+  }
+  
   return (
     <Navigation
       currentUser={currentUser}
@@ -248,9 +253,7 @@ function App() {
 
     setCurrentPage('confirmation')
     }
-  if (!currentUser) {
-    return <LoginPage onLogin={handleLogin} />
-  }
+  
   
 }
 
